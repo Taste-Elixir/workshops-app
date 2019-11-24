@@ -3,6 +3,7 @@ defmodule WorkshopsAppWeb.UserSocket do
 
   ## Channels
   # channel "room:*", WorkshopsAppWeb.RoomChannel
+  channel "general:lobby", WorkshopsAppWeb.GeneralChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

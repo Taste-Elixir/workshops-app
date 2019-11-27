@@ -9,4 +9,8 @@ defmodule WorkshopsApp.Conversations do
     |> Message.changeset(attrs)
     |> Repo.insert()
   end
+
+  def list_messages do
+    Repo.all(Message)
+  end
 end

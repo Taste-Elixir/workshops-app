@@ -57,17 +57,24 @@ let channel = socket.channel("general:lobby", {});
 let list    = $('#message-list');
 let message = $('#message');
 let name    = $('#name');
+let fileInput = $('#file-input');
+var filereader  = new FileReader();
 
 message.on('keypress', event => {
   if (event.keyCode == 13) {
-    channel.push('shout', { name: name.val(), message: message.val() });
-    message.val('');
+    filereader.readAsDataURL($("#file-input").prop('files')[0]);
+
+    filereader.onload = function () {
+      channel.push('shout', { name: name.val(), message: message.val(), file: filereader.result });
+      message.val('');
+    }
   }
 });
 
 channel.on('shout', payload => {
   list.append(`<b>${payload.name || 'Anonymous'}:</b> ${payload.message}<br>`);
   list.prop({scrollTop: list.prop("scrollHeight")});
+  list.append(`<img src=${payload.file} />`)
 });
 
 channel.join()

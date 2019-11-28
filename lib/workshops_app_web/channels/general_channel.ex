@@ -15,7 +15,7 @@ defmodule WorkshopsAppWeb.GeneralChannel do
   def handle_info(:after_join, socket) do
     messages =
       Conversations.list_messages()
-      |> Enum.map(fn(m) -> %{message: m.message, name: m.name} end)
+      |> Enum.map(fn(%{message: message, name: name}) -> %{message: message, name: name} end)
 
     push socket, "messages_history", %{messages: messages}
     {:noreply, socket}
